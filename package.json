@@ -1,0 +1,14 @@
+{
+  "name": "CrookedSpaces.com",
+  "description": "Parking is hard!",
+  "author": {
+    "name": "Tom Bremer",
+    "email": "tom@tbremer.com"
+  },
+  "contributors": [],
+  "dependencies": {
+    "chalk": "^1.0.0",
+    "handlebars": "^3.0.1",
+    "twitter": "^1.2.5"
+  }
+}
