@@ -1,28 +1,28 @@
-'use strict';
-
 var http = require('http'),
+    getSecure = require('https').get,
     chalk = require('chalk'),
     checkRoutes = require('./lib/check-routes'),
+    instagram = require('./lib/Routes/instagram'),
+    twitter = require('./lib/Routes/twitter'),
+    home = require('./lib/Routes/home'),
     server = http.createServer,
-    routes = [
-      '/',
-      '/instagram',
-      '/twitter',
-      '/space/(?:[0-9]+)'
-    ],
-    routes2 = {
-      '/': 123,
-      '/instagram': 456,
-      '/twitter': 789,
-      '/space/(?:[0-9]+)': '0-='
+    routes = {
+      '/': home,
+      '/instagram': instagram,
+      '/twitter': twitter,
+      '/space/(?:[0-9]+)': 'space'
     };
 
 server(function (req, res) {
-  var validRoute = checkRoutes(req.url, routes2),
+  var url_parts = req.url.split(/\?(.+)?/),
+      url = url_parts[0],
+      query = url_parts[1] || '',
+      validRoute = checkRoutes(url, routes),
       header = {
         code: ((validRoute) ? 200 : 404),
         content: 'text/plain',
-      };
+      },
+      data;
 
   res.writeHead(header.code, {
     'Content-Type': header.content
@@ -32,9 +32,9 @@ server(function (req, res) {
     return res.end('404');
   }
 
-  return res.end(req.url);
-
-
+  routes[validRoute](null, function (data) {
+    return res.end(data);
+  });
 }).listen(1111, function () {
   console.log("listening…")
 });
