@@ -53,7 +53,7 @@ server(function (req, res) {
     }
     template = Handlebars.compile(templates.end);
     html = template();
-    console.log(html);
+
     return res.end(html);
   });
 }).listen(1111, function () {
