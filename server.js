@@ -33,7 +33,7 @@ server(function (req, res) {
   }
 
   routes[validRoute](null, function (data) {
-    return res.end(data);
+    return res.end(JSON.stringify(data));
   });
 }).listen(1111, function () {
   console.log("listening…")
