@@ -1,6 +1,7 @@
 var http = require('http'),
     getSecure = require('https').get,
-    chalk = require('chalk'),
+    fs = require('fs'),
+    Handlebars = require('handlebars'),
     checkRoutes = require('./lib/check-routes'),
     instagram = require('./lib/Routes/instagram'),
     twitter = require('./lib/Routes/twitter'),
@@ -11,6 +12,9 @@ var http = require('http'),
       '/instagram': instagram,
       '/twitter': twitter,
       '/space/(?:[0-9]+)': 'space'
+    },
+    templates = {
+      end: fs.readFileSync(__dirname + '/lib/templates/end-of-dom.hbs', {encoding: 'utf-8'})
     };
 
 server(function (req, res) {
@@ -20,9 +24,9 @@ server(function (req, res) {
       validRoute = checkRoutes(url, routes),
       header = {
         code: ((validRoute) ? 200 : 404),
-        content: 'text/plain',
+        content: 'text/html',
       },
-      data;
+      data, template, html;
 
   res.writeHead(header.code, {
     'Content-Type': header.content
@@ -33,7 +37,24 @@ server(function (req, res) {
   }
 
   routes[validRoute](null, function (data) {
-    return res.end(JSON.stringify(data));
+    if (data.write) {
+      data.write.forEach(function (el) {
+        if (typeof el !== 'string') {
+          // handle if it's not a string
+        }
+
+        res.write(el);
+      });
+      delete data.write;
+    }
+
+    if (data.display_write_end === true) {
+      return res.end(JSON.stringify(data));
+    }
+    template = Handlebars.compile(templates.end);
+    html = template();
+    console.log(html);
+    return res.end(html);
   });
 }).listen(1111, function () {
   console.log("listening…");
