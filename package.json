@@ -7,10 +7,31 @@
     "email": "tom@tbremer.com"
   },
   "contributors": [],
+  "scripts": {
+      "test": "jshint **.js lib/*.js lib/Routes/*.js && jscs **/*.js"
+    },
   "dependencies": {
     "async": "^0.9.0",
     "chalk": "^1.0.0",
     "handlebars": "^3.0.1",
     "twitter": "^1.2.5"
+  },
+  "devDependencies": {
+    "jscs": "^1.12.0",
+    "jshint": "^2.6.3"
+  },
+  "jshintConfig": {
+    "curly": true,
+    "eqeqeq": true,
+    "immed": true,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "sub": true,
+    "undef": true,
+    "boss": true,
+    "eqnull": true,
+    "node": true,
+    "mocha": true
   }
 }

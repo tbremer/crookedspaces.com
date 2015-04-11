@@ -36,5 +36,5 @@ server(function (req, res) {
     return res.end(JSON.stringify(data));
   });
 }).listen(1111, function () {
-  console.log("listening…")
+  console.log("listening…");
 });
