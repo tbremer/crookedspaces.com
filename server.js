@@ -14,6 +14,7 @@ var http = require('http'),
       '/space/(?:[0-9]+)': 'space'
     },
     templates = {
+      home: fs.readFileSync(__dirname + '/lib/templates/home.hbs', {encoding: 'utf-8'}),
       end: fs.readFileSync(__dirname + '/lib/templates/end-of-dom.hbs', {encoding: 'utf-8'})
     };
 
@@ -35,6 +36,8 @@ server(function (req, res) {
   if (!validRoute) {
     return res.end('404');
   }
+
+  res.write(templates.home);
 
   routes[validRoute](null, function (data) {
     if (data.write) {
