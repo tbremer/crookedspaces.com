@@ -1,64 +1,62 @@
 var http = require('http'),
-    getSecure = require('https').get,
     fs = require('fs'),
     Handlebars = require('handlebars'),
     checkRoutes = require('./lib/check-routes'),
-    instagram = require('./lib/Routes/instagram'),
-    twitter = require('./lib/Routes/twitter'),
     home = require('./lib/Routes/home'),
+    nexturls = require('./lib/Routes/nexturls'),
     server = http.createServer,
     routes = {
       '/': home,
-      '/instagram': instagram,
-      '/twitter': twitter,
+      '/nexturls': {
+        content_type: 'application/json',
+        action: nexturls
+      },
       '/space/(?:[0-9]+)': 'space'
     },
     templates = {
-      home: fs.readFileSync(__dirname + '/lib/templates/home.hbs', {encoding: 'utf-8'}),
+      head: fs.readFileSync(__dirname + '/lib/templates/home.hbs', {encoding: 'utf-8'}),
       end: fs.readFileSync(__dirname + '/lib/templates/end-of-dom.hbs', {encoding: 'utf-8'})
     };
 
 server(function (req, res) {
+  var start = new Date().getTime();
+
   var url_parts = req.url.split(/\?(.+)?/),
       url = url_parts[0],
       query = url_parts[1] || '',
-      validRoute = checkRoutes(url, routes),
+      valid_route = checkRoutes(url, routes),
       header = {
-        code: ((validRoute) ? 200 : 404),
-        content: 'text/html',
+        code: ((valid_route) ? 200 : 404),
+        content: valid_route.content_type,
       },
-      data, template, html;
+      data;
 
   res.writeHead(header.code, {
     'Content-Type': header.content
   });
 
-  if (!validRoute) {
+  if (!valid_route) {
     return res.end('404');
   }
 
-  res.write(templates.home);
+  if (valid_route.content_type !== 'application/json') {
+    res.write(templates.head);
+  }
 
-  routes[validRoute](null, function (data) {
-    if (data.write) {
-      data.write.forEach(function (el) {
-        if (typeof el !== 'string') {
-          // handle if it's not a string
-        }
+  valid_route.action({res: res, query: query}, function (err, data) {
+    data = data || templates.end;
 
-        res.write(el);
-      });
-      delete data.write;
+    if (err) {
+      throw new Error(err);
     }
 
-    if (data.display_write_end === true) {
+    if (data.constructor === Object && valid_route.content_type === 'application/json') {
       return res.end(JSON.stringify(data));
     }
-    template = Handlebars.compile(templates.end);
-    html = template();
 
-    return res.end(html);
+    return res.end(data);
   });
+
 }).listen(1111, function () {
   console.log("listening…");
 });
