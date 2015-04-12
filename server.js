@@ -5,6 +5,7 @@ var http = require('http'),
     home = require('./lib/Routes/home'),
     nexturls = require('./lib/Routes/nexturls'),
     server = http.createServer,
+    port = process.env.PORT || 1111,
     routes = {
       '/': home,
       '/nexturls': {
@@ -55,6 +56,6 @@ server(function (req, res) {
     return res.end(data);
   });
 
-}).listen(1111, function () {
-  console.log("Listening… on port 1111");
+}).listen(port, function () {
+  console.log("Listening… on port %s", port);
 });
