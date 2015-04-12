@@ -19,8 +19,6 @@ var http = require('http'),
     };
 
 server(function (req, res) {
-  var start = new Date().getTime();
-
   var url_parts = req.url.split(/\?(.+)?/),
       url = url_parts[0],
       query = url_parts[1] || '',
