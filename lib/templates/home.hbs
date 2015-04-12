@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Crooked Spaces</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,900' rel='stylesheet' type='text/css'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
         html,
         body {
@@ -22,7 +23,7 @@
             text-decoration: underline;
         }
         a + a {
-            margin-left: 10px;
+            margin-left: 7px;
         }
         .global-header {
             position: fixed;
@@ -30,8 +31,21 @@
             left: 0;
             width: 100%;
             height: 60px;
-            padding: 0 10px;
+            padding: 0 30px;
             background-color: rgba(239, 239, 239, .5);
+        }
+        .fa.logo {
+            display: inline-block;
+            color: #131313;
+            margin-right: 10px;
+            font-size: 1.25em;
+            vertical-align: middle;
+            -webkit-transform: matrix(1, -0.2, 0, 1, 0, 0);
+            -moz-transform: matrix(1, -0.2, 0, 1, 0, 0);
+            -ms-transform: matrix(1, -0.2, 0, 1, 0, 0);
+            -o-transform: matrix(1, -0.2, 0, 1, 0, 0);
+            transform: matrix(1, -0.2, 0, 1, 0, 0);
+            text-shadow: -3px -1px rgba(163, 163, 163, 0.1), -4px -2px rgba(163, 163, 163, 0.1), -5px -3px rgba(221, 0, 0, 0.2);
         }
         .global-header .header,
         .global-nav {
@@ -42,12 +56,13 @@
             padding: 0;
             font-weight: 900;
             text-shadow: 1px 1px 0 rgba(163, 163, 163, .3);
+            text-transform: uppercase;
         }
 
         .global-nav {
             position: absolute;
             top: 0;
-            right: 25px;
+            right: 75px;
         }
 
         .main-content {
@@ -73,12 +88,12 @@
             max-height: 100%;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 </head>
 <body>
     <header class="global-header">
-        <h1 class='header'>Crooked Spaces</h1>
+        <h1 class='header'><i class="fa fa-car logo"></i>Crooked Spaces</h1>
         <nav class="global-nav">
-            <a href="/">home</a>
             <a href="/about">about</a>
         </nav>
     </header>
