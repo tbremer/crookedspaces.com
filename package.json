@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "async": "^0.9.0",
+    "file-type": "^2.5.0",
     "handlebars": "^3.0.1",
     "twitter": "^1.2.5"
   },
