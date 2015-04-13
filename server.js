@@ -11,7 +11,7 @@ var http = require('http'),
     port = process.env.PORT || 1111,
     routes = {
       '/': home,
-      '/assets/([\\W\\w]+)?': {
+      '/assets/(?:.+)?': {
         content_type: '*',
         action: static_files
       },
