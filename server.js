@@ -7,9 +7,9 @@ var http = require('http'),
     home = require('./lib/routes/home'),
     nexturls = require('./lib/routes/nexturls'),
     static_files = require('./lib/static-files'),
-    api = {
-      vote: require('./lib/routes/api/vote')
-    },
+    // api = {
+    //   vote: require('./lib/routes/api/vote')
+    // },
     server = http.createServer,
     port = process.env.PORT || 1111,
     routes = {
