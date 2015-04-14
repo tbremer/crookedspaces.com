@@ -4,9 +4,12 @@ var http = require('http'),
     fs = require('fs'),
     Handlebars = require('handlebars'),
     checkRoutes = require('./lib/check-routes'),
-    home = require('./lib/Routes/home'),
-    nexturls = require('./lib/Routes/nexturls'),
+    home = require('./lib/routes/home'),
+    nexturls = require('./lib/routes/nexturls'),
     static_files = require('./lib/static-files'),
+    api = {
+      vote: require('./lib/routes/api/vote')
+    },
     server = http.createServer,
     port = process.env.PORT || 1111,
     routes = {
@@ -19,7 +22,8 @@ var http = require('http'),
         content_type: 'application/json',
         action: nexturls
       },
-      '/space/(?:[0-9]+)': 'space'
+      '/space/(?:[0-9]+)': 'space',
+      // '/api/vote': api.vote
     },
     templates = {
       head: fs.readFileSync(__dirname + '/lib/templates/head-of-dom.hbs', {encoding: 'utf-8'}),
