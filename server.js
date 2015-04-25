@@ -5,11 +5,11 @@ var http = require('http'),
     Handlebars = require('handlebars'),
     checkRoutes = require('./lib/check-routes'),
     home = require('./lib/routes/home'),
-    nexturls = require('./lib/routes/nexturls'),
     static_files = require('./lib/static-files'),
-    // api = {
-    //   vote: require('./lib/routes/api/vote')
-    // },
+    api = {
+      // vote: require('./lib/routes/api/vote'),
+      nexturls: require('./lib/routes/nexturls')
+    },
     server = http.createServer,
     port = process.env.PORT || 1111,
     routes = {
@@ -18,11 +18,8 @@ var http = require('http'),
         content_type: '*',
         action: static_files
       },
-      '/nexturls': {
-        content_type: 'application/json',
-        action: nexturls
-      },
       '/space/(?:[0-9]+)': 'space',
+      '/api/nexturls': api.nexturls
       // '/api/vote': api.vote
     },
     templates = {

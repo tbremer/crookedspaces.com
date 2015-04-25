@@ -1,9 +1,22 @@
 <section class="main-content">
     <section class="images">
-        {{#images}}
-            <div class="image-wrap">
-                <img src="{{image_url}}" alt="" class="img">
-            </div>
-        {{/images}}
+    {{#images}}
+    <figure class="img-wrapper">
+        <img class="content-img" src="{{image_url}}" alt="" />
+
+        <figcaption class="additional-content">
+            <img src="{{user.avatar}}" alt="" class="avatar" />
+
+            <aside class="meta-info">
+                <span class="meta user-name">{{user.name}}</span>
+                <span class="meta timestamp">{{time-since timestamp}}</span>
+                <div class="vote-wrapper hide">
+                    <button class="vote down">￬</button>
+                    <button class="vote up">￪</button>
+                </div>
+            </aside>
+        </figcaption>
+    </figure>
+    {{/images}}
     </section>
 </section>
