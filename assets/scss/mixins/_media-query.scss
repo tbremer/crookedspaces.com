@@ -1,0 +1,7 @@
+@mixin media($size, $width:'max') {
+    $size: get($breakpoints, $size);
+
+    @media (#{$width}-width: #{$size}px) {
+      @content;
+    }
+}
