@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "chalk": "^1.0.0",
+    "js-yaml": "^3.13.1",
     "jscs": "^3.0.7",
     "jshint": "^2.6.3"
   },
